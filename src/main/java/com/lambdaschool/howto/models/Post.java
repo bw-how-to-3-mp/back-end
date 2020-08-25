@@ -4,17 +4,20 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 
+@Entity
+@Table(name = "posts")
 public class Post extends Auditable
 {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long postid;
 
     @Column(nullable = false)
-    private String body;
+    private String title;
 
     @Column(nullable = false)
-    private String title;
+    private String body;
 
     @ManyToOne
     @JoinColumn(name = "userid")
@@ -26,11 +29,11 @@ public class Post extends Auditable
     }
 
     public Post(
-        String body,
-        String title)
+        String title,
+        String body)
     {
-        this.body = body;
         this.title = title;
+        this.body = body;
     }
 
     public long getPostid()
@@ -43,16 +46,6 @@ public class Post extends Auditable
         this.postid = postid;
     }
 
-    public String getBody()
-    {
-        return body;
-    }
-
-    public void setBody(String body)
-    {
-        this.body = body;
-    }
-
     public String getTitle()
     {
         return title;
@@ -61,6 +54,16 @@ public class Post extends Auditable
     public void setTitle(String title)
     {
         this.title = title;
+    }
+
+    public String getBody()
+    {
+        return body;
+    }
+
+    public void setBody(String body)
+    {
+        this.body = body;
     }
 
     public User getUser()
@@ -72,4 +75,5 @@ public class Post extends Auditable
     {
         this.user = user;
     }
+
 }

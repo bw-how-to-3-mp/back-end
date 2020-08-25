@@ -7,11 +7,16 @@ import java.util.List;
 public class ErrorDetail
 {
     private String title;
+
     private int status;
+
     private String detail;
+
     private Date timestamp;
+
     private String developerMessage;
-    private List<ValidationErrors> errors = new ArrayList<>();
+
+    private List<ValidationError> errors = new ArrayList<>();
 
     public ErrorDetail()
     {
@@ -67,12 +72,12 @@ public class ErrorDetail
         this.developerMessage = developerMessage;
     }
 
-    public List<ValidationErrors> getErrors()
+    public List<ValidationError> getErrors()
     {
         return errors;
     }
 
-    public void setErrors(List<ValidationErrors> errors)
+    public void setErrors(List<ValidationError> errors)
     {
         this.errors = errors;
     }

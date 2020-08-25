@@ -16,6 +16,7 @@ import java.util.Set;
 @Table(name = "users")
 public class User extends Auditable
 {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long userid;
@@ -28,14 +29,18 @@ public class User extends Auditable
     private String password;
 
     @OneToMany(mappedBy = "user",
-    cascade = CascadeType.ALL, orphanRemoval = true)
+        cascade = CascadeType.ALL,
+        orphanRemoval = true)
     @JsonIgnoreProperties(value = "user",
-    allowSetters = true)
+        allowSetters = true)
     private Set<UserRoles> roles = new HashSet<>();
 
-    @OneToMany(mappedBy =  "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnoreProperties(value = "user", allowSetters = true)
-    private Set<Vote> votedPost = new HashSet<>();
+    @OneToMany(mappedBy = "user",
+        cascade = CascadeType.ALL,
+        orphanRemoval = true)
+    @JsonIgnoreProperties(value = "user",
+        allowSetters = true)
+    private List<Post> posts = new ArrayList<>();
 
     public User()
     {
@@ -46,7 +51,7 @@ public class User extends Auditable
         String password)
     {
         this.username = username;
-        this.password = password;
+        this.setPassword(password);
     }
 
     public long getUserid()
@@ -77,6 +82,11 @@ public class User extends Auditable
     public void setPassword(String password)
     {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        this.password = passwordEncoder.encode(password);
+    }
+
+    public void setPasswordNoEncrypt(String password)
+    {
         this.password = password;
     }
 
@@ -90,26 +100,39 @@ public class User extends Auditable
         this.roles = roles;
     }
 
-//    public Set<Vote> getVotedPost()
-//    {
-//        return votedPost;
-//    }
-//
-//    public void setVotedPost(Set<Vote> votedPost)
-//    {
-//        this.votedPost = votedPost;
-//    }
+    public void addRole(UserRoles userRoles)
+    {
+        roles.add(userRoles);
+    }
+
+    public List<Post> getPosts()
+    {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts)
+    {
+        this.posts = posts;
+    }
+
+    public void addPost(Post post)
+    {
+        posts.add(post);
+    }
 
     @JsonIgnore
-    public List<SimpleGrantedAuthority> getAuthority() {
-        List<SimpleGrantedAuthority> list = new ArrayList<>();
-        for (UserRoles r : this. roles)
+    public List<SimpleGrantedAuthority> getAuthority()
+    {
+        List<SimpleGrantedAuthority> rtnList = new ArrayList<>();
+
+        for (UserRoles r : this.roles)
         {
-            String myRole = "Role_" + r.getRole()
+            String myRole = "ROLE_" + r.getRole()
                 .getName()
                 .toUpperCase();
-            list.add(new SimpleGrantedAuthority(myRole));
+            rtnList.add(new SimpleGrantedAuthority(myRole));
         }
-        return list;
+
+        return rtnList;
     }
 }

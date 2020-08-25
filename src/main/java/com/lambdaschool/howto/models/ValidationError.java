@@ -1,8 +1,9 @@
 package com.lambdaschool.howto.models;
 
-public class ValidationErrors
+public class ValidationError
 {
     private String Code;
+
     private String message;
 
     public String getCode()
@@ -28,9 +29,6 @@ public class ValidationErrors
     @Override
     public String toString()
     {
-        return "ValidationErrors{" +
-            "Code='" + Code + '\'' +
-            ", message='" + message + '\'' +
-            '}';
+        return "ValidationError{" + "Code='" + Code + '\'' + ", message='" + message + '\'' + '}';
     }
 }

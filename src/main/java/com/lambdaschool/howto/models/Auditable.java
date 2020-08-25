@@ -1,6 +1,7 @@
 package com.lambdaschool.howto.models;
 
 import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -17,11 +18,11 @@ import static javax.persistence.TemporalType.TIMESTAMP;
 abstract class Auditable
 {
     @CreatedBy
-    protected  String createdBy;
+    protected String createdBy;
 
-    @CreatedBy
+    @CreatedDate
     @Temporal(TIMESTAMP)
-    protected Date creatdData;
+    protected Date createdDate;
 
     @LastModifiedBy
     protected String lastModifiedBy;
@@ -29,5 +30,4 @@ abstract class Auditable
     @LastModifiedDate
     @Temporal(TIMESTAMP)
     protected Date lastModifiedDate;
-
 }

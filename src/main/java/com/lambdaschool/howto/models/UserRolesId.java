@@ -2,12 +2,13 @@ package com.lambdaschool.howto.models;
 
 import java.io.Serializable;
 
-public class UserRolesID implements Serializable
+public class UserRolesId implements Serializable
 {
     private long user;
+
     private long role;
 
-    public UserRolesID()
+    public UserRolesId()
     {
     }
 
@@ -42,7 +43,7 @@ public class UserRolesID implements Serializable
         {
             return false;
         }
-        UserRolesID that = (UserRolesID) o;
+        UserRolesId that = (UserRolesId) o;
         return user == that.user &&
             role == that.role;
     }

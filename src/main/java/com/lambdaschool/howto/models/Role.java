@@ -10,6 +10,7 @@ import java.util.Set;
 @Table(name = "roles")
 public class Role extends Auditable
 {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long roleid;
@@ -17,13 +18,20 @@ public class Role extends Auditable
     @Column(nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL,
-    orphanRemoval = true)
-    @JsonIgnoreProperties(value = "roles", allowSetters = true)
+    @OneToMany(mappedBy = "role",
+        cascade = CascadeType.ALL,
+        orphanRemoval = true)
+    @JsonIgnoreProperties(value = "role",
+        allowSetters = true)
     private Set<UserRoles> users = new HashSet<>();
 
     public Role()
     {
+    }
+
+    public Role(String name)
+    {
+        this.name = name;
     }
 
     public long getRoleid()
