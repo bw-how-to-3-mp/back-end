@@ -22,9 +22,7 @@ public class RoleServiceImp implements RoleService
     public List<Role> findAll()
     {
         List<Role> roles = new ArrayList<>();
-        rolerepo.findAll()
-            .iterator()
-            .forEachRemaining(roles::add);
+        rolerepo.findAll().iterator().forEachRemaining(roles::add);
         return roles;
     }
 
@@ -38,12 +36,9 @@ public class RoleServiceImp implements RoleService
     @Override
     public Role save(Role role)
     {
-        if (role.getUsers()
-            .size() > 0)
-        {
+        if (role.getUsers().size() > 0) {
             throw new ResourceFoundException("User Roles are not updated through Role.");
         }
-
         return rolerepo.save(role);
     }
 
@@ -52,17 +47,14 @@ public class RoleServiceImp implements RoleService
     {
         Role role = rolerepo.findByNameIgnoreCase(name);
 
-        if (role == null)
-        {
+        if (role == null) {
             throw new ResourceNotFoundException("Role " + name + " is not found!");
         }
         return role;
     }
 
     @Override
-    public Role update(
-        long id,
-        Role role)
+    public Role update(long id, Role role)
     {
         return null;
     }

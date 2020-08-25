@@ -3,7 +3,6 @@ package com.lambdaschool.howto.models;
 public class ValidationError
 {
     private String Code;
-
     private String message;
 
     public String getCode()

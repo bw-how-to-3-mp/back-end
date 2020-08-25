@@ -17,10 +17,8 @@ public class UserServiceImp implements UserService
 {
     @Autowired
     private UserRepository userrepo;
-
     @Autowired
     private PostRepository postrepo;
-
     @Autowired
     private RoleService roleService;
 
@@ -28,9 +26,7 @@ public class UserServiceImp implements UserService
     public List<User> findAll()
     {
         List<User> list = new ArrayList<>();
-        userrepo.findAll()
-            .iterator()
-            .forEachRemaining(list::add);
+        userrepo.findAll().iterator().forEachRemaining(list::add);
         return list;
     }
 
@@ -44,8 +40,7 @@ public class UserServiceImp implements UserService
     public User findByUsername(String username)
     {
         User user = userrepo.findByUsernameIgnoreCase(username);
-        if (user == null)
-        {
+        if (user == null) {
             throw new ResourceNotFoundException("User name " + username + " not found!");
         }
         return user;
@@ -54,16 +49,14 @@ public class UserServiceImp implements UserService
     @Override
     public User findUserById(long id) throws ResourceNotFoundException
     {
-        return userrepo.findById(id)
-            .orElseThrow(() -> new ResourceNotFoundException("User id " + id + " not found!"));
+        return userrepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("User id " + id + " not found!"));
     }
 
     @Transactional
     @Override
     public void delete(long id) throws ResourceNotFoundException
     {
-        userrepo.findById(id)
-            .orElseThrow(() -> new ResourceNotFoundException("User id " + id + " not found!"));
+        userrepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("User id " + id + " not found!"));
         userrepo.deleteById(id);
     }
 
@@ -73,19 +66,16 @@ public class UserServiceImp implements UserService
     {
         User user1 = new User();
 
-        if (user.getUserid() != 0)
-        {
-            userrepo.findById(user.getUserid())
-                .orElseThrow(() -> new ResourceNotFoundException("User id " + user.getUserid() + " not found!"));
+        if (user.getUserid() != 0) {
+            userrepo.findById(user.getUserid()).orElseThrow(() -> new ResourceNotFoundException("User id " + user.getUserid() +
+                " not found!"));
             user1.setUserid(user.getUserid());
         }
 
         user1.setUsername(user.getUsername());
         user1.setPasswordNoEncrypt(user.getPassword());
 
-        for (UserRoles ur :
-            user.getRoles())
-        {
+        for (UserRoles ur : user.getRoles()) {
             Role newRole = roleService.findRoleById(ur.getRole()
                 .getRoleid());
             user1.getRoles()
@@ -93,14 +83,11 @@ public class UserServiceImp implements UserService
                     newRole));
         }
 
-        for (Post p :
-            user.getPosts())
-        {
+        for (Post p : user.getPosts()) {
             Post newPost = postrepo.findById(p.getPostid())
                 .orElseThrow(() -> new ResourceNotFoundException("Post id " + p.getPostid() + " not found!"));
             user1.addPost(newPost);
         }
-
        return userrepo.save(user1);
     }
 
@@ -110,7 +97,6 @@ public class UserServiceImp implements UserService
     {
         User user = findUserById(id);
         Role role = roleService.findByName("admin");
-
         user.getRoles().add(new UserRoles(user, role));
     }
 }

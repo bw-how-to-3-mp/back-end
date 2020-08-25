@@ -31,7 +31,6 @@ public class OpenController
 {
     @Autowired
     private UserService userService;
-
     @Autowired
     private RoleService roleService;
 
@@ -39,12 +38,7 @@ public class OpenController
             consumes = {"application/json"},
             produces = {"application/json"})
     public ResponseEntity<?> addSelf(
-            HttpServletRequest httpServletRequest,
-            @Valid
-            @RequestBody
-                    UserMinimum newminuser)
-            throws
-            URISyntaxException
+            HttpServletRequest httpServletRequest, @Valid @RequestBody UserMinimum newminuser) throws URISyntaxException
     {
         User newuser = new User();
 
@@ -55,7 +49,6 @@ public class OpenController
         newRoles.add(new UserRoles(newuser,
                                    roleService.findByName("user")));
         newuser.setRoles(newRoles);
-
         newuser = userService.save(newuser);
 
         HttpHeaders responseHeaders = new HttpHeaders();
@@ -65,14 +58,9 @@ public class OpenController
         responseHeaders.setLocation(newUserURI);
 
         RestTemplate restTemplate = new RestTemplate();
-//        String requestURI = "http://" + httpServletRequest.getServerName() + ":" + httpServletRequest.getLocalPort() + "/login";
-        String port = "";
-        if (httpServletRequest.getServerName()
-            .equalsIgnoreCase("localhost"))
-        {
-            port = ":" + httpServletRequest.getLocalPort();
-        }
-        String requestURI = "http://" + httpServletRequest.getServerName() + port + "/login";
+        String requestURI = "http://" + httpServletRequest.getServerName() +
+            (httpServletRequest.getServerName().equalsIgnoreCase("localhost") ? httpServletRequest.getLocalPort() : "") +
+        "/login";
 
         List<MediaType> acceptableMediaTypes = new ArrayList<>();
         acceptableMediaTypes.add(MediaType.APPLICATION_JSON);

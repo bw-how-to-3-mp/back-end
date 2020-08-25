@@ -33,8 +33,7 @@ public class SeedData implements CommandLineRunner
         r2 = roleService.save(r2);
 
         User u1 = new User("admin", "password");
-        u1.addRole(new UserRoles(u1,
-            r1));
+        u1.addRole(new UserRoles(u1, r1));
         u1 = userService.save(u1);
 
         Post p1 = new Post("TEST", "Test Data ");

@@ -24,9 +24,7 @@ public class Post extends Auditable
     @JsonIgnoreProperties(value = "posts")
     private User user;
 
-    public Post()
-    {
-    }
+    public Post() {}
 
     public Post(
         String title,

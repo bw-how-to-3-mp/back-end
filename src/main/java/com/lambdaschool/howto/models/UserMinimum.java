@@ -3,12 +3,9 @@ package com.lambdaschool.howto.models;
 public class UserMinimum
 {
     private String username;
-
     private String password;
 
-    public UserMinimum()
-    {
-    }
+    public UserMinimum() {}
 
     public String getUsername()
     {

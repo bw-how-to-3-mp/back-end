@@ -18,14 +18,12 @@ import java.util.List;
 @RequestMapping("/posts")
 public class PostController
 {
-
     @Autowired
     private PostService postService;
 
     @GetMapping(value = "/posts",
         produces = {"application/json"})
-    public ResponseEntity<?> listAllPost()
-    {
+    public ResponseEntity<?> listAllPost() {
         List<Post> posts = postService.findAll();
         return new ResponseEntity<>(posts,
             HttpStatus.OK);
@@ -33,16 +31,14 @@ public class PostController
 
     @GetMapping(value = "/user",
     produces = {"application/json"})
-    public ResponseEntity<?> listUsersPost()
-    {
+    public ResponseEntity<?> listUsersPost() {
         List<Post> list = postService.findUsersPost();
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
     @PostMapping(value = "/post",
     consumes = "application/json", produces = "application/json")
-    public ResponseEntity<?> addNewPost (@Valid @RequestBody Post newPost) throws URISyntaxException
-    {
+    public ResponseEntity<?> addNewPost (@Valid @RequestBody Post newPost) throws URISyntaxException {
         newPost.setPostid(0);
         newPost = postService.save(newPost);
 
@@ -57,8 +53,7 @@ public class PostController
 
     @PutMapping(value = "/post/{postid}",
     consumes = "application/json", produces = "application/json")
-    public ResponseEntity<?> updateFullPost (@Valid @RequestBody Post updatePost, @PathVariable long postid)
-    {
+    public ResponseEntity<?> updateFullPost (@Valid @RequestBody Post updatePost, @PathVariable long postid) {
         updatePost.setPostid(postid);
         updatePost = postService.save(updatePost);
 
@@ -66,8 +61,7 @@ public class PostController
     }
 
     @DeleteMapping(value = "/post/{postid}")
-    public ResponseEntity<?> deletePostById (@PathVariable long postid)
-    {
+    public ResponseEntity<?> deletePostById (@PathVariable long postid) {
         postService.delete(postid);
         return new ResponseEntity<>(HttpStatus.OK);
     }

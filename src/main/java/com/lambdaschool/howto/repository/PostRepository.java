@@ -8,6 +8,5 @@ import java.util.List;
 public interface PostRepository extends CrudRepository<Post, Long>
 {
     Post findByTitleIgnoreCase(String title);
-
     List<Post> findByTitleContainingIgnoreCase(String title);
 }

@@ -17,17 +17,13 @@ public class LogoutController
     @Autowired
     private TokenStore tokenStore;
 
-    @RequestMapping(value = {"/oauth/revoke-token", "/logout"},
-        method = RequestMethod.GET)
+    @RequestMapping(value = {"/oauth/revoke-token", "/logout"}, method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     public void logoutSelf(HttpServletRequest request)
     {
         String authHeader = request.getHeader("Authorization");
-        if (authHeader != null)
-        {
-            String tokenValue = authHeader.replace("Bearer",
-                "")
-                .trim();
+        if (authHeader != null) {
+            String tokenValue = authHeader.replace("Bearer", "").trim();
             OAuth2AccessToken accessToken = tokenStore.readAccessToken(tokenValue);
             tokenStore.removeAccessToken(accessToken);
         }

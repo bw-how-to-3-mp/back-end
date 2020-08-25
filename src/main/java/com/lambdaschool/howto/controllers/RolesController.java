@@ -16,12 +16,9 @@ public class RolesController
     @Autowired
     private UserService userService;
 
-
     @PutMapping(value = "/user/{userid}")
-    public ResponseEntity<?> addAdminRole(@PathVariable long userid)
-    {
+    public ResponseEntity<?> addAdminRole(@PathVariable long userid) {
         userService.addRoleAdmin(userid);
-
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

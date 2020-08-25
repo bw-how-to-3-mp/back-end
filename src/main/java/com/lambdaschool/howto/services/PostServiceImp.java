@@ -19,7 +19,6 @@ public class PostServiceImp implements PostService
 
     @Autowired
     PostRepository postrepo;
-
     @Autowired
     UserService userService;
 
@@ -27,9 +26,7 @@ public class PostServiceImp implements PostService
     public List<Post> findAll()
     {
         List<Post> list = new ArrayList<>();
-        postrepo.findAll()
-            .iterator()
-            .forEachRemaining(list::add);
+        postrepo.findAll().iterator().forEachRemaining(list::add);
         return list;
     }
 
@@ -44,8 +41,7 @@ public class PostServiceImp implements PostService
     public Post findByTitle(String title)
     {
         Post post = postrepo.findByTitleIgnoreCase(title);
-        if (post == null)
-        {
+        if (post == null) {
             throw new ResourceNotFoundException("Post title " + title + " not Found!");
         }
         return post;
@@ -62,25 +58,20 @@ public class PostServiceImp implements PostService
     public Post save(Post post)
     {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
         Post newPost = new Post();
 
-        if (post.getPostid() != 0)
-        {
-            postrepo.findById(post.getPostid())
-                .orElseThrow(() -> new ResourceNotFoundException("Post id " + post.getPostid() + " not Found!"));
+        if (post.getPostid() != 0) {
+            postrepo.findById(post.getPostid()).orElseThrow(() -> new ResourceNotFoundException("Post id " +
+                post.getPostid() + " not Found!"));
             newPost.setPostid(post.getPostid());
         }
 
         newPost.setTitle(post.getTitle());
         newPost.setBody(post.getBody());
 
-        if (authentication == null)
-        {
-            newPost.setUser(userService.findUserById(post.getUser()
-                .getUserid()));
-        } else
-        {
+        if (authentication == null) {
+            newPost.setUser(userService.findUserById(post.getUser().getUserid()));
+        } else {
             newPost.setUser(userService.findByUsername(authentication.getName()));
         }
         return postrepo.save(newPost);
@@ -88,19 +79,15 @@ public class PostServiceImp implements PostService
 
     @Transactional
     @Override
-    public Post update(
-        Post post,
-        long id)
+    public Post update(Post post, long id)
     {
         Post currentPost = findPostById(id);
 
-        if (post.getTitle() != null)
-        {
+        if (post.getTitle() != null) {
             currentPost.setTitle(post.getTitle());
         }
 
-        if (post.getBody() != null)
-        {
+        if (post.getBody() != null) {
             currentPost.setBody(post.getBody());
         }
 
@@ -120,7 +107,6 @@ public class PostServiceImp implements PostService
     public List<Post> findUsersPost()
     {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
         List<Post> userPosts = userService.findByUsername(authentication.getName()).getPosts();
         return userPosts;
     }

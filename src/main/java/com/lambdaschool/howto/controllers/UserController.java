@@ -13,14 +13,12 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserController
 {
-
     @Autowired
     private UserService userService;
 
     @GetMapping(value = "/users",
         produces = {"application/json"})
-    public ResponseEntity<?> listAllUsers()
-    {
+    public ResponseEntity<?> listAllUsers() {
         List<User> list = userService.findAll();
         return new ResponseEntity<>(list,
             HttpStatus.OK);
@@ -28,31 +26,21 @@ public class UserController
 
     @GetMapping(value = "/user/username/{username}",
         produces = {"application/json"})
-    public ResponseEntity<?> getuserByUsername(
-        @PathVariable
-            String username)
-    {
+    public ResponseEntity<?> getuserByUsername(@PathVariable String username) {
         User user = userService.findByUsername(username);
-        return new ResponseEntity<>(user,
-            HttpStatus.OK);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @GetMapping(value = "/user/username/like/{username}",
         produces = {"application/json"})
-    public ResponseEntity<?> getUsersLike(
-        @PathVariable
-            String username)
-    {
+    public ResponseEntity<?> getUsersLike(@PathVariable String username) {
         List<User> users = userService.findByNameContaining(username);
-        return new ResponseEntity<>(users,
-            HttpStatus.OK);
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/user/{userid}")
-    public ResponseEntity<?> deleteUserById(@PathVariable long userid)
-    {
+    public ResponseEntity<?> deleteUserById(@PathVariable long userid) {
         userService.delete(userid);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
 }
