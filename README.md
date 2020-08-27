@@ -40,7 +40,7 @@ returns
     {
         "postid": 4,
         "title": "TEST",
-        "body": "TESTING, 123....., TESTING, 123",
+        "body": "TESTING",
         "user": {
             "userid": 3,
             "username": "admin",
@@ -74,8 +74,8 @@ returns
     },
     {
         "postid": 9,
-        "title": "Hey",
-        "body": "this is my test",
+        "title": "Test title",
+        "body": "this is a  test",
         "user": {
             "userid": 8,
             "username": "joe",
@@ -162,7 +162,7 @@ returns
     {
         "postid": 4,
         "title": "TEST",
-        "body": "TESTING, 123....., TESTING, 123",
+        "body": "TESTING",
         "user": {
             "userid": 3,
             "username": "admin",
@@ -202,7 +202,7 @@ returns
             {
                 "postid": 4,
                 "title": "TEST",
-                "body": "TESTING, 123....., TESTING, 123"
+                "body": "TESTING"
             }
         ],
     },

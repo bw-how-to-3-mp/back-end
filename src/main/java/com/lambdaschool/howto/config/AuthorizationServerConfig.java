@@ -17,7 +17,7 @@ public class AuthorizationServerConfig
     extends AuthorizationServerConfigurerAdapter
 {
     static final String CLIENT_ID = System.getenv("OAUTHCLIENTID");
-    static final String CLIENT_SECRET = System.getenv("OAUTHCLIENTSECRET"); // read from environment variable
+    static final String CLIENT_SECRET = System.getenv("OAUTHCLIENTSECRET");
     static final String GRANT_TYPE_PASSWORD = "password";
     static final String AUTHORIZATION_CODE = "authorization_code";
     static final String SCOPE_READ = "read";
@@ -51,8 +51,8 @@ public class AuthorizationServerConfig
     {
         endpoints.tokenStore(tokenStore)
             .authenticationManager(authenticationManager);
-        // here instead of our clients requesting authentication at the endpoint /oauth/token, they request it at the endpoint /login
         endpoints.pathMapping("/oauth/token",
             "/login");
+        // Authentication can be requested at the /login endpoint
     }
 }
