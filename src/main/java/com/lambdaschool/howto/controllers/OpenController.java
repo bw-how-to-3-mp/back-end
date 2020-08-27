@@ -50,7 +50,7 @@ public class OpenController
                                    roleService.findByName("user")));
         newuser.setRoles(newRoles);
         newuser = userService.save(newuser);
-
+//
         HttpHeaders responseHeaders = new HttpHeaders();
         URI newUserURI = ServletUriComponentsBuilder.fromUriString(httpServletRequest.getServerName() + ":" + httpServletRequest.getLocalPort() + "/users/user/{userId}")
                 .buildAndExpand(newuser.getUserid())
@@ -93,14 +93,10 @@ public class OpenController
                                     HttpStatus.CREATED);
     }
 
-    /**
-     * Prevents no favicon.ico warning from appearing in the logs. @ApiIgnore tells Swagger to ignore documenting this as an endpoint.
-     */
     @ApiIgnore
     @GetMapping("favicon.ico")
     public void returnNoFavicon()
     {
-
     }
 
 }
